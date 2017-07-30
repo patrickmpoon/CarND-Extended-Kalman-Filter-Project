@@ -71,3 +71,19 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 
     return Hj;
 }
+
+MatrixXd Tools::h(const VectorXd& x_state) {
+    VectorXd h_(3);
+    float px = x_state(0);
+    float py = x_state(1);
+    float vx = x_state(2);
+    float vy = x_state(3);
+
+    float range = sqrt(px*px + py*py);
+
+    h_ << range,
+          atan2(px, py),
+          (px*vx + py*vy) / range;
+
+    return h_;
+}

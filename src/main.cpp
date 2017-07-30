@@ -108,7 +108,7 @@ int main()
           //Call ProcessMeasurment(meas_package) for Kalman filter
           fusionEKF.ProcessMeasurement(meas_package);
 
-          //Push the current estimated x,y positon from the Klaman filter's state vector
+          //Push the current estimated x,y position from the Kalman filter's state vector
 
           VectorXd estimate(4);
 
@@ -136,15 +136,12 @@ int main()
           auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
           // std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
-
         }
       } else {
-        
         std::string msg = "42[\"manual\",{}]";
         ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
       }
     }
-
   });
 
   // We don't need this since we're not using HTTP but if it's removed the program
