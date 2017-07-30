@@ -49,6 +49,10 @@ int main()
             auto s = hasData(std::string(data));
             if (s != "") {
 
+                cout << "\n-------------------------------------- MEASUREMENT --------------------------------------" << endl; // REMOVEME
+                cout << "[Count: " << fusionEKF.count << "]" << endl; // REMOVEME
+                fusionEKF.count += 1; // REMOVEME
+
                 auto j = json::parse(s);
 
                 std::string event = j[0].get<std::string>();
@@ -67,6 +71,7 @@ int main()
                     iss >> sensor_type;
 
                     if (sensor_type.compare("L") == 0) {
+                        cout << "\nL:" << endl;
                         meas_package.sensor_type_ = MeasurementPackage::LASER;
                         meas_package.raw_measurements_ = VectorXd(2);
                         float px;
@@ -75,6 +80,7 @@ int main()
                         iss >> py;
                         meas_package.raw_measurements_ << px, py;
                     } else if (sensor_type.compare("R") == 0) {
+                        cout << "\nR:" << endl;
                         meas_package.sensor_type_ = MeasurementPackage::RADAR;
                         meas_package.raw_measurements_ = VectorXd(3);
                         float rho;
@@ -133,7 +139,7 @@ int main()
                     msgJson["rmse_vx"] = RMSE(2);
                     msgJson["rmse_vy"] = RMSE(3);
                     auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
-                    std::cout << msg << std::endl;
+//                    std::cout << msg << std::endl;
                     ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
                 }
             } else {

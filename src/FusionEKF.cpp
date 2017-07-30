@@ -36,8 +36,9 @@ FusionEKF::FusionEKF() {
     noise_ay = 9;
 
     // initial state
-    ekf_.x_ = VectorXd(4);
-    ekf_.x_ << 1, 1, 1, 1;
+//    ekf_.x_ = VectorXd(4);
+//    ekf_.x_ << 1, 1, 1, 1;
+//    ekf_.x_ << 0, 0, 0, 0;
 
     //the initial transition matrix F_
     ekf_.F_ = MatrixXd(4, 4);
@@ -55,6 +56,8 @@ FusionEKF::FusionEKF() {
 
     //set the process covariance matrix Q
     ekf_.Q_ = MatrixXd(4, 4);
+
+    count = 0; // REMOVEME
 }
 
 /**
@@ -75,6 +78,9 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
           * Create the covariance matrix.
           * Remember: you'll need to convert radar from polar to cartesian coordinates.
         */
+
+        // initial state
+        ekf_.x_ = VectorXd(4);
 
         if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
             /**
@@ -105,6 +111,11 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
         // done initializing, no need to predict or update
         is_initialized_ = true;
+
+        cout << "EKF Initialized!!!" << endl; // REMOVEME
+        cout << "x_ = " << ekf_.x_ << endl;
+        cout << "P_ = " << ekf_.P_ << endl;
+
         return;
     }
 
@@ -166,6 +177,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     }
 
     // print the output
-    cout << "x_ = " << ekf_.x_ << endl;
-    cout << "P_ = " << ekf_.P_ << endl;
+//    cout << "x_ = " << ekf_.x_ << endl;
+//    cout << "P_ = " << ekf_.P_ << endl;
 }

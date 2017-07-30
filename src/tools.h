@@ -30,6 +30,8 @@ public:
     MatrixXd CalculateJacobian(const VectorXd& x_state);
 
     MatrixXd h(const VectorXd& x_state);
+
+    bool debug = false; // REMOVEME
 };
 
 

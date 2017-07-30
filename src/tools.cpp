@@ -1,16 +1,22 @@
 #include <iostream>
 #include "tools.h"
 
+using namespace std; // REMOVEME
+
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
 using std::vector;
 
-Tools::Tools() {}
+Tools::Tools() {
+    debug = true;
+}
 
 Tools::~Tools() {}
 
 VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
                               const vector<VectorXd> &ground_truth) {
+
+    bool debug = false; // REMOVEME
 
     VectorXd rmse(4);
     rmse << 0,0,0,0;
@@ -27,6 +33,13 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
     //accumulate squared residuals
     for(unsigned int i=0; i < estimations.size(); ++i){
         VectorXd residual = estimations[i] - ground_truth[i];
+
+        if (debug) {
+            cout << "\n[CalculateRMSE]" << endl; // REMOVEME
+            cout << "\nresidual:\n" << residual << endl; // REMOVEME
+            cout << "\nestimations[i]:\n" << estimations[i] << endl; // REMOVEME
+            cout << "\nground_truth[i]:\n" << ground_truth[i] << endl; // REMOVEME
+        }
 
         //coefficient-wise multiplication
         residual = residual.array()*residual.array();
@@ -82,7 +95,7 @@ MatrixXd Tools::h(const VectorXd& x_state) {
     float range = sqrt(px*px + py*py);
 
     h_ << range,
-          atan2(px, py),
+          atan2(py, px),
           (px*vx + py*vy) / range;
 
     return h_;
