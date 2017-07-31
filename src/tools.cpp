@@ -7,16 +7,12 @@ using Eigen::VectorXd;
 using Eigen::MatrixXd;
 using std::vector;
 
-Tools::Tools() {
-    debug = true;
-}
+Tools::Tools() {}
 
 Tools::~Tools() {}
 
 VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
                               const vector<VectorXd> &ground_truth) {
-
-    bool debug = false; // REMOVEME
 
     VectorXd rmse(4);
     rmse << 0,0,0,0;
@@ -44,12 +40,6 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 
     //calculate the squared root
     rmse = rmse.array().sqrt();
-
-    std::cout << "\nrmse:" << rmse << "\n" << std::endl;  // REMOVEME
-
-    if (rmse(0) > 0.11 || rmse(1) > 0.11 || rmse(2) > 0.52 || rmse(3) > 0.52) {
-        cout << "RMSE Exceeded!!!" << endl;
-    }
 
     //return the result
     return rmse;
