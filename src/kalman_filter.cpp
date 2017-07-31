@@ -46,6 +46,7 @@ void KalmanFilter::Update(const VectorXd &z) {
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
     P_ = (I - K * H_) * P_;
 
+    // REMOVEME
     if (tools_.debug) {
         cout << "\nUpdate:" << endl;
         cout << "x_ = " << x_ << endl;
@@ -54,11 +55,7 @@ void KalmanFilter::Update(const VectorXd &z) {
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
-    /**
-    TODO:
-      * update the state by using Extended Kalman Filter equations
-    */
-
+    // Check for division by zero
     float px = x_(0);
     float py = x_(1);
     if ((px*px + py*py) < 0.0001) {
@@ -68,12 +65,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     VectorXd z_pred = H_ * x_;
     VectorXd y = z - tools_.h(x_);
 
-    float phi = y(1);
-    if (phi > M_PI) {
-        y(1) = 2*M_PI - phi;
-    } else if (phi < -M_PI ) {
-        y(1) = 2*M_PI + phi;
-    }
+    y(1) = tools_.normalize_angle(y(1));
 
     MatrixXd Ht = H_.transpose();
     MatrixXd S = H_ * P_ * Ht + R_;

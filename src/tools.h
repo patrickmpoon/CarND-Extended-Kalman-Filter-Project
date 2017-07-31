@@ -31,6 +31,8 @@ public:
 
     MatrixXd h(const VectorXd& x_state);
 
+    float normalize_angle(float angle);
+
     bool debug = false; // REMOVEME
 };
 

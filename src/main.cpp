@@ -71,7 +71,7 @@ int main()
                     iss >> sensor_type;
 
                     if (sensor_type.compare("L") == 0) {
-                        cout << "\nL:" << endl;
+                        cout << "\nL:" << endl; // REMOVEME
                         meas_package.sensor_type_ = MeasurementPackage::LASER;
                         meas_package.raw_measurements_ = VectorXd(2);
                         float px;
@@ -80,7 +80,7 @@ int main()
                         iss >> py;
                         meas_package.raw_measurements_ << px, py;
                     } else if (sensor_type.compare("R") == 0) {
-                        cout << "\nR:" << endl;
+                        cout << "\nR:" << endl; // REMOVEME
                         meas_package.sensor_type_ = MeasurementPackage::RADAR;
                         meas_package.raw_measurements_ = VectorXd(3);
                         float rho;

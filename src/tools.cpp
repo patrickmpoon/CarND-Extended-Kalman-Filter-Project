@@ -34,13 +34,6 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
     for(unsigned int i=0; i < estimations.size(); ++i){
         VectorXd residual = estimations[i] - ground_truth[i];
 
-        if (debug) {
-            cout << "\n[CalculateRMSE]" << endl; // REMOVEME
-            cout << "\nresidual:\n" << residual << endl; // REMOVEME
-            cout << "\nestimations[i]:\n" << estimations[i] << endl; // REMOVEME
-            cout << "\nground_truth[i]:\n" << ground_truth[i] << endl; // REMOVEME
-        }
-
         //coefficient-wise multiplication
         residual = residual.array()*residual.array();
         rmse += residual;
@@ -103,4 +96,14 @@ MatrixXd Tools::h(const VectorXd& x_state) {
           (px*vx + py*vy) / range;
 
     return h_;
+}
+
+float Tools::normalize_angle(float angle) {
+    float normalized = angle;
+    if (normalized > M_PI) {
+        normalized = 2*M_PI - normalized;
+    } else if (normalized < -M_PI ) {
+        normalized = 2*M_PI + normalized;
+    }
+    return normalized;
 }
