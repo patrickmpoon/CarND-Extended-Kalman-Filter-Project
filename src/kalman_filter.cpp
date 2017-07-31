@@ -1,8 +1,5 @@
 #include "kalman_filter.h"
 
-#include <iostream>
-using namespace std; // REMOVEME and the cout's that need this
-
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
